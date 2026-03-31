@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Shoplifting Detector</title></head>
+<body>
+  <h1>Shoplifting Detection</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="video" accept="video/*" required>
+    <button type="submit">Analyze Video</button>
+  </form>
+
+  {% if result %}
+    <hr>
+    <h2>Result: {{ result.label }}</h2>
+    <p>Confidence: {{ result.confidence }}%</p>
+  {% endif %}
+
+  {% if error %}
+    <hr>
+    <h3 style="color:red;">Error occurred:</h3>
+    <pre style="background:#fee; padding:1rem; overflow:auto;">{{ error }}</pre>
+  {% endif %}
+
+  {% if not result and not error and request.method == "POST" %}
+    <hr>
+    <p style="color:orange;">⚠️ No result returned. Check that a video file was uploaded correctly.</p>
+  {% endif %}
+</body>
+</html>

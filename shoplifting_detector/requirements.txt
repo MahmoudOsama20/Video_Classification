@@ -1,0 +1,4 @@
+django
+tensorflow
+opencv-python
+numpy
